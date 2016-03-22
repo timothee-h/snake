@@ -1,0 +1,523 @@
+html, body {
+  width:100%;
+  height:100%;
+}
+body {
+  background-image: url(../img/WALLPAPER.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #000;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: birdy;
+  font-size: 20px;
+}
+
+.container {
+  width:100%;
+  height:100%;
+}
+
+#snakeHead {
+  position: absolute;
+}
+
+#snakeFood {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+}
+
+.snakeBody {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+}
+
+#map {
+  position: absolute;
+  z-index:100;
+  width: 520px;
+  height: 520px;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  border-radius: 2px;
+  border: 1px solid #000;
+  display:none;
+  background-color: rgba(255, 255, 255, 0.50);
+}
+
+#pique {
+  position: absolute;
+  z-index:-2;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  display:none;
+}
+
+#game_over {
+  display: none;
+  position: relative;
+  z-index: 1;
+  height: 300px;
+  width: 200px;
+  background-color: lightyellow;
+  margin: 0 auto;
+  margin-top: 50px;
+  border: solid 1px #000;
+  text-align: center;
+  z-index: 100;
+}
+
+#menu {
+  text-align: center;
+}
+
+#menu span{
+  display: block;
+}
+
+#play{
+  display: inline-block;
+  border: 2px solid #fcde3a;
+  color: black;
+  text-decoration: none;
+  padding: 10px 30px;
+  margin-top: 170px;
+  transition: 0.5s;
+  font-size: 40px;
+}
+
+#play:hover,
+#replay:hover {
+  background-color: #fcde3a;
+  color: black;
+}
+
+#pause {
+  position: absolute;
+  margin: 10px 10px;
+  display: inline-block;
+  height: 25px;
+  width: 40px;
+  border-left: 4px solid black;
+}
+
+#pause::after {
+  content:'';
+  margin-left: 8px;
+  display: inline-block;
+  height: 25px;
+  width: 4px;
+  background-color: black;
+}
+
+#resume {
+  position: absolute;
+  display: none;
+  margin: 10px 10px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 15px 0 15px 30px;
+  border-color: transparent transparent transparent black;
+}
+
+#facebook {
+  display: block;
+}
+
+#twitter {
+  display: block;
+}
+
+#best_score,
+#score {
+  font-size: 14px;
+  letter-spacing: 1px;
+  display: block;
+}
+
+#lvl {
+  font-size: 35px;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%);
+  text-align: center;
+  top: 50%;
+  margin-top: -350px;
+}
+
+#skip {
+  font-size: 35px;
+  right: 50px;
+  position: absolute;
+  text-align: center;
+  bottom: 50px;
+  z-index: 100000;
+  text-decoration: none;
+  display: none;
+}
+#skip:hover {
+  color: #fcde3a;
+}
+
+#minion,
+#starwars {
+  text-decoration: none;
+  display: block;
+}
+
+#score_map {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 25px;
+  font-weight: bold;
+  color: black;
+}
+#starsCanvas {
+  position: absolute;
+  display:none;
+  width: 100%;
+  height:100%;
+}
+
+.minion-side, .starwars-side {
+  position: relative;
+  float:left;
+  width:50%;
+  height:100%;
+}
+
+.minion-side h2, .starwars-side h2 {
+  cursor:pointer;
+  z-index: 1;
+  color: #fcde3a;
+}
+
+.minion-side h2{
+  font-family: moderna;
+  position:absolute;
+  top: 20%;
+  right:0%;
+  transition-duration: 0.7s;
+  -webkit-animation : 'startMin' 3s 1;
+}
+.starwars-side h2{
+  font-family: starwars;
+  position:absolute;
+  bottom: 20%;
+  left:0%;
+  transition-duration: 0.7s;
+  -webkit-animation : 'startSw' 3s 1;
+}
+.starwars-side h2:hover,
+.minion-side h2:hover{
+  color: #f9ae07;
+}
+.minion-side img{
+  width: 75%;
+  position: absolute;
+  bottom: 0%;
+  left: 0;
+  -webkit-animation : 'startBGMin' 3s 1;
+}
+.starwars-side img{
+  width: 85%;
+  position: absolute;
+  bottom: 0%;
+  right: 0;
+  -webkit-animation : 'startBGDv' 3s 1;
+}
+h1{
+  z-index: 2;
+  font-size: 70px;
+  text-align: center;
+  color: white;
+  margin-top: 50vh;
+  transform: translateY(-50%);
+  position: absolute;
+  width: 100%;
+}
+                        /* -------FONT------- */
+@font-face {
+  font-family: "birdy";
+  src :url('../font/birdy_game/Birdy Game.ttf');
+}
+@font-face {
+  font-family : "moderna";
+  src : url('../font/moderna/MODERNA_.TTF');
+}
+@font-face {
+  font-family : "starwars";
+  src : url('../font/star_jedi/starjout/Starjout.ttf');
+}
+
+                        /* -------ANIMATION------- */
+
+@-webkit-keyframes startBGMin{
+  0% {margin-left : -100%;}
+  100% {margin-left: 0;}
+}
+@-webkit-keyframes startBGDv{
+  0% {margin-right : -100%;}
+  100% {margin-right : 0%;}
+}
+@-webkit-keyframes startMin {
+  0% {top: -50%;}
+  50% {top: 30%}
+  100% {top: 20%;}
+}
+@-webkit-keyframes startSw {
+  0% {bottom: -50%;}
+  50% {bottom: 30%;}
+  100% {bottom: 20%;}
+}
+
+.start-minions {
+  font-size: 80px;
+}
+
+.start-starwars {
+  font-size: 55px;
+}
+
+#replay {
+  display: inline-block;
+  border: 2px solid #fcde3a;
+  color: black;
+  text-decoration: none;
+  padding: 10px 30px;
+  margin-top: 50px;
+  transition: 0.5s;
+  font-size: 40px;
+}
+
+#manche_droite,
+#manche_gauche {
+  display: none;
+  position: absolute;
+  bottom: 8%;
+  z-index: 2;
+}
+#manche_droite {
+  right: 10%;
+  transform: rotate(-3deg);
+}
+#manche_gauche {
+  left: 10%;
+  transform: rotate(3deg);
+}
+#laser_droite,
+#laser_gauche {
+  display: none;
+  position: absolute;
+  height: 450px;
+  width: 25px;
+  background-color: yellow;
+  bottom: 10%;
+  margin-bottom: 150px;
+  box-shadow: 0 0 15px yellow;
+  border-radius: 10px;
+  opacity: 0.9;
+}
+
+#laser_gauche {
+  margin-left: 73px;
+  transform: rotate(3deg);
+  left: 10%;
+}
+
+#laser_droite {
+  margin-right: 73px;
+  transform: rotate(-3deg);
+  right: 10%;
+}
+
+#laser_droite::after,
+#laser_gauche::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 450px;
+  width: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+  top: 10px;
+  left: 7px;
+  border-radius: 5px;
+}
+
+/*============================================*\
+
+    #opening sequence
+
+\*============================================*/
+
+  @import url(http://fonts.googleapis.com/css?family=News+Cycle:400,700);
+
+  .starwars section {
+    color: #ff6;
+    font: 700 1em "News Cycle", sans-serif;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+  }
+  .starwars .start {
+    font-size: 200%;
+    width: 14em;
+    margin: -4em 0 0 -7em;
+    text-align: center;
+    cursor: pointer;
+  }
+  .starwars .start span {
+    color: #4bd5ee;
+  }
+  .starwars .intro {
+    width: 15em;
+    margin: 0 0 0 -7.5em;
+    font-size: 200%;
+    font-weight: 400;
+    color: #4bd5ee;
+    opacity: 0;
+    -webkit-animation: intro 6s ease-out 1s;
+            animation: intro 6s ease-out 1s;
+  }
+  .starwars .logo {
+    opacity: 0;
+    -webkit-animation: logo 9s ease-out 9s;
+            animation: logo 9s ease-out 9s;
+  }
+  .starwars .logo svg {
+    width: inherit;
+  }
+  .starwars .titles {
+    width: 14.65em;
+    margin: 0 0 0 -7.325em;
+    top: auto;
+    bottom: 0;
+    height: 50em;
+    font-size: 350%;
+    text-align: justify;
+    overflow: hidden;
+    -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+    -webkit-transform: perspective(300px) rotateX(25deg);
+    transform: perspective(300px) rotateX(25deg);
+  }
+  .starwars .titles > div {
+    position: absolute;
+    top: 100%;
+    -webkit-animation: titles 81s linear 13s;
+            animation: titles 81s linear 13s;
+  }
+  .starwars .titles > div > p {
+    margin: 1.35em 0 1.85em 0;
+    line-height: 1.35em;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  @-webkit-keyframes intro {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes intro {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @-webkit-keyframes logo {
+    0% {
+      width: 18em;
+      margin: -9em 0 0 -9em;
+      -webkit-transform: scale(2.75);
+      transform: scale(2.75);
+      opacity: 1;
+    }
+    50% {
+      opacity: 1;
+      width: 18em;
+      margin: -9em 0 0 -9em;
+    }
+    100% {
+      -webkit-transform: scale(0.1);
+      transform: scale(0.1);
+      opacity: 0;
+      width: 18em;
+      margin: -9em 0 0 -9em;
+    }
+  }
+  @keyframes logo {
+    0% {
+      width: 18em;
+      margin: -9em 0 0 -9em;
+      -webkit-transform: scale(2.75);
+      transform: scale(2.75);
+      opacity: 1;
+    }
+    50% {
+      opacity: 1;
+      width: 18em;
+      margin: -9em 0 0 -9em;
+    }
+    100% {
+      -webkit-transform: scale(0.1);
+      transform: scale(0.1);
+      opacity: 0;
+      width: 18em;
+      margin: -9em 0 0 -9em;
+    }
+  }
+  @-webkit-keyframes titles {
+    0% {
+      top: 100%;
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      top: 20%;
+      opacity: 0;
+    }
+  }
+  @keyframes titles {
+    0% {
+      top: 100%;
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% {
+      top: 20%;
+      opacity: 0;
+    }
+  }
