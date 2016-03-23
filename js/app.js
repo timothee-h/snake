@@ -35,6 +35,7 @@ var laser_gauche = document.querySelector('#laser_gauche');
 var manche_droite = document.querySelector('#manche_droite');
 var laser_droite = document.querySelector('#laser_droite');
 var skip = document.querySelector("#skip");
+var timer = 0;
 
 //btn_pulse
 setTimeout(function() {
@@ -188,14 +189,34 @@ function deplacement(noeud) {
     }
   }
 }
-
+var pause_current = 0;
 //Fonction de controle au clavier
 document.onkeydown = Command;
 function Command(applyKey) {
-  if (applyKey.keyCode == 38 && dirY != taille) { dirX = 0; dirY = -taille; }
-  else if (applyKey.keyCode == 40 && dirY != -taille) { dirX = 0; dirY = taille; }
-  else if (applyKey.keyCode == 37 && dirX != taille) { dirX = -taille; dirY = 0; }
-  else if (applyKey.keyCode == 39 && dirX != -taille) { dirX = taille; dirY = 0; }
+  if (applyKey.keyCode == 38 && dirY != taille && timer === 0) { dirX = 0; dirY = -taille; }
+  else if (applyKey.keyCode == 40 && dirY != -taille && timer === 0) { dirX = 0; dirY = taille; }
+  else if (applyKey.keyCode == 37 && dirX != taille && timer === 0) { dirX = -taille; dirY = 0; }
+  else if (applyKey.keyCode == 39 && dirX != -taille && timer === 0) { dirX = taille; dirY = 0; }
+  else if ( applyKey.keyCode == 32 && pause_current === 0) {
+    pause_current = 1;
+    pause();
+  }
+  else if ( applyKey.keyCode == 32 && pause_current == 1 ) {
+    pause_current = 0;
+    resume();
+  }
+  if(timer === 0){
+      timer = Math.floor(speed/10);
+      timerCmd = setInterval(function commandLoop() {
+        commandLock();
+      }, 1);
+    }
+}
+function commandLock() {
+  timer--;
+  if(timer === 0) {
+    clearInterval(timerCmd);
+  }
 }
 
 //Fonction score
@@ -226,14 +247,29 @@ function lvl_print(lvl) {
 
 //Lancement univer minion
 startMinions.onclick = function() {
-  univers_minion();
-  map.style.display = 'block';
+  musicmn_e.play();
   startMinions.style.display = 'none';
   startStarwars.style.display = 'none';
   body.style.backgroundImage = "none";
   minion.style.display = "none";
   starwars.style.display = "none";
-  lvl_print("facile");
+  title.style.display = "none";
+  skip.style.display = 'block';
+  skip.onclick = function() {
+    clearTimeout(opening_sequence);
+    musicmn_e.play();
+    univers_minion();
+    map.style.display = 'block';
+    lvl_print("Facile");
+    skip.style.display = 'none';
+  };
+  opening_sequence = setTimeout( function(){
+    musicst_e.play();
+    univers_minion();
+    map.style.display = 'block';
+    lvl_print("Facile");
+    skip.style.display = 'none';
+  }, 50000);
 };
 
 //Lancement star wars
@@ -371,6 +407,7 @@ function evolution() {
       musicmn4.pause();
       musicmn5.play();
       lvl_print("Impossible");
+      document.querySelector('#pique').style.display = "block";
     }
   }
   if (univers == starwars) {
@@ -413,7 +450,6 @@ function evolution() {
       musicst3.pause();
       musicst4.play();
       lvl_print("Yoda");
-      //$("#map").css({"transform": "rotate(45deg)", "transform-origin": "0% 0%", "top": "0%"});
     }
     else {
       clearInterval(time);
