@@ -36,6 +36,8 @@ var manche_droite = document.querySelector('#manche_droite');
 var laser_droite = document.querySelector('#laser_droite');
 var skip = document.querySelector("#skip");
 var timer = 0;
+var pause_current = 0;
+var music_current = "st";
 
 //btn_pulse
 setTimeout(function() {
@@ -109,7 +111,14 @@ function init() {
   time = setInterval(function() {
     deplacement(snakeHead, dirX, dirY);
   }, speed);
-  musicst1.play();
+  if (univers == starwars) {
+    musicst1.play();
+    music_current = "st1";
+  }
+  else {
+    musicmn1.play();
+    music_current = "mn1";
+  }
 }
 
 //fonction de mise en pause du jeu
@@ -124,6 +133,11 @@ function pause() {
   musicst3.pause();
   musicst4.pause();
   musicst5.pause();
+  musicmn1.pause();
+  musicmn2.pause();
+  musicmn3.pause();
+  musicmn4.pause();
+  musicmn5.pause();
 }
 
 //fonction retour au jeu
@@ -133,7 +147,36 @@ function resume() {
   }, speed);
   resume_btn.style.display = "none";
   pause_btn.style.display = "inline-block";
-  musicst1.play();
+  if ( music_current == "mn1"){
+    musicmn1.play();
+  }
+  else if ( music_current == "mn2"){
+    musicmn2.play();
+  }
+  else if ( music_current == "mn3"){
+    musicmn3.play();
+  }
+  else if ( music_current == "mn4"){
+    musicmn4.play();
+  }
+  else if ( music_current == "mn5"){
+    musicmn5.play();
+  }
+  else if ( music_current == "st1"){
+    musicst1.play();
+  }
+  else if ( music_current == "st2"){
+    musicst2.play();
+  }
+  else if ( music_current == "st3"){
+    musicst3.play();
+  }
+  else if ( music_current == "st4"){
+    musicst4.play();
+  }
+  else if ( music_current == "st5"){
+    musicst5.play();
+  }
 }
 
 //fonction mort
@@ -144,6 +187,11 @@ function death() {
   musicst3.pause();
   musicst4.pause();
   musicst5.pause();
+  musicmn1.pause();
+  musicmn2.pause();
+  musicmn3.pause();
+  musicmn4.pause();
+  musicmn5.pause();
   if (score > best_score) {
     localStorage.setItem("best_score", score);
   }
@@ -152,7 +200,7 @@ function death() {
 
 //fonction replay
 function replay() {
-  location.reload(true);
+  location.reload();
 }
 
 //fonction de deplacement du serpent + mort
@@ -189,7 +237,7 @@ function deplacement(noeud) {
     }
   }
 }
-var pause_current = 0;
+
 //Fonction de controle au clavier
 document.onkeydown = Command;
 function Command(applyKey) {
@@ -205,25 +253,13 @@ function Command(applyKey) {
     pause_current = 0;
     resume();
   }
-  if(timer === 0){
-      timer = Math.floor(speed/10);
-      timerCmd = setInterval(function commandLoop() {
-        commandLock();
-      }, 1);
-    }
-}
-function commandLock() {
-  timer--;
-  if(timer === 0) {
-    clearInterval(timerCmd);
-  }
 }
 
 //Fonction score
 function score_print() {
   score_area = document.querySelector("#score");
   score_area_map = document.querySelector("#score_map");
-  score_area.innerHTML = "score : " + score;
+  score_area.innerHTML = score;
   score_area_map.innerHTML = score;
   evolution();
   score++;
@@ -236,7 +272,7 @@ function best_score_print() {
     best_score = 1;
   }
   best_score_area = document.querySelector("#best_score");
-  best_score_area.innerHTML = "meilleur score : " + (best_score - 1);
+  best_score_area.innerHTML = "RECORD " + (best_score - 1);
 }
 
 //Fonction lvl
@@ -382,6 +418,7 @@ function evolution() {
       map.style.boxShadow = "0px 0px 10px #ffc385";
       musicmn1.pause();
       musicmn2.play();
+      music_current = "mn2";
       lvl_print("moyen");
     }
     else if (score < 7) {
@@ -390,6 +427,7 @@ function evolution() {
       map.style.boxShadow = "0px 0px 20px #ff9e85";
       musicmn2.pause();
       musicmn3.play();
+      music_current = "mn3";
       lvl_print("difficile");
     }
     else if (score < 10) {
@@ -398,6 +436,7 @@ function evolution() {
       map.style.boxShadow = "0px 0px 30px #ff8585";
       musicmn3.pause();
       musicmn4.play();
+      music_current = "mn4";
       lvl_print("trés difficile");
     }
     else {
@@ -406,6 +445,7 @@ function evolution() {
       map.style.boxShadow = "0px 0px 40px red";
       musicmn4.pause();
       musicmn5.play();
+      music_current = "mn5";
       lvl_print("Impossible");
       document.querySelector('#pique').style.display = "block";
     }
@@ -425,6 +465,7 @@ function evolution() {
       laser_gauche.style.backgroundColor = "purple";
       musicst1.pause();
       musicst2.play();
+      music_current = "st2";
       lvl_print("padawan");
     }
     else if (score < 7) {
@@ -437,6 +478,7 @@ function evolution() {
       laser_gauche.style.backgroundColor = "blue";
       musicst2.pause();
       musicst3.play();
+      music_current = "st3";
       lvl_print("Jedi");
     }
     else if (score < 10) {
@@ -449,6 +491,7 @@ function evolution() {
       laser_gauche.style.backgroundColor = "green";
       musicst3.pause();
       musicst4.play();
+      music_current = "st4";
       lvl_print("Yoda");
     }
     else {
@@ -461,6 +504,7 @@ function evolution() {
       laser_gauche.style.backgroundColor = "red";
       musicst4.pause();
       musicst5.play();
+      music_current = "st5";
       lvl_print("Vador");
       document.querySelector('#pique').style.display = "block";
     }

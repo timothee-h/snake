@@ -61,17 +61,20 @@ body {
 }
 
 #game_over {
-  display: none;
+  display: block;
   position: relative;
   z-index: 1;
-  height: 300px;
+  height: 400px;
   width: 200px;
-  background-color: lightyellow;
   margin: 0 auto;
-  margin-top: 50px;
-  border: solid 1px #000;
+  margin-top: 90px;
   text-align: center;
   z-index: 100;
+  display: none;
+}
+
+#game_over h2{
+  font-size: 40px;
 }
 
 #menu {
@@ -88,7 +91,7 @@ body {
   color: black;
   text-decoration: none;
   padding: 10px 30px;
-  margin-top: 170px;
+  margin-top: 220px;
   transition: 0.5s;
   font-size: 40px;
 }
@@ -97,6 +100,10 @@ body {
 #replay:hover {
   background-color: #fcde3a;
   color: black;
+}
+
+#replay {
+  background-color: #fcde3a;
 }
 
 #pause {
@@ -136,10 +143,16 @@ body {
   display: block;
 }
 
-#best_score,
-#score {
-  font-size: 14px;
+#best_score {
+  margin-bottom: 30px;
+  font-size: 18px;
   letter-spacing: 1px;
+  display: block;
+}
+
+#score {
+  margin-top: 30px;
+  font-size: 50px;
   display: block;
 }
 
