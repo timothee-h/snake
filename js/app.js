@@ -17,6 +17,7 @@ var musicmn4 = document.querySelector('#musicmn4');
 var musicmn5 = document.querySelector('#musicmn5');
 var musicst_e = document.querySelector('#musicst_e');
 var musicmn_e = document.querySelector('#musicmn_e');
+var opnening_mn = document.querySelector('.animation_mn');
 var speed = 100;
 var score = 0;
 var taille = 20;
@@ -34,6 +35,8 @@ var manche_gauche = document.querySelector('#manche_gauche');
 var laser_gauche = document.querySelector('#laser_gauche');
 var manche_droite = document.querySelector('#manche_droite');
 var laser_droite = document.querySelector('#laser_droite');
+var minion_droite = document.querySelector('#minion_droite');
+var minion_gauche = document.querySelector('#minion_gauche');
 var skip = document.querySelector("#skip");
 var timer = 0;
 var pause_current = 0;
@@ -284,6 +287,7 @@ function lvl_print(lvl) {
 //Lancement univer minion
 startMinions.onclick = function() {
   musicmn_e.play();
+  musicmn1.play();
   startMinions.style.display = 'none';
   startStarwars.style.display = 'none';
   body.style.backgroundImage = "none";
@@ -291,6 +295,8 @@ startMinions.onclick = function() {
   starwars.style.display = "none";
   title.style.display = "none";
   skip.style.display = 'block';
+  opnening_mn.style.display = 'block';
+  body.style.backgroundColor = "#fffe85";
   skip.onclick = function() {
     clearTimeout(opening_sequence);
     musicmn_e.play();
@@ -298,14 +304,18 @@ startMinions.onclick = function() {
     map.style.display = 'block';
     lvl_print("Facile");
     skip.style.display = 'none';
+    opnening_mn.style.display = 'none';
+    musicmn1.pause();
   };
   opening_sequence = setTimeout( function(){
-    musicst_e.play();
+    musicmn_e.play();
     univers_minion();
     map.style.display = 'block';
     lvl_print("Facile");
     skip.style.display = 'none';
-  }, 50000);
+    opnening_mn.style.display = 'none';
+    musicmn1.pause();
+  }, 20000);
 };
 
 //Lancement star wars
@@ -400,7 +410,8 @@ function univers_starwars() {
 //design univers_minion
 function univers_minion() {
   map.style.boxShadow = "0px 0px 20px #fffe85";
-  body.style.backgroundColor = "#fffe85";
+  minion_droite.style.display = "block";
+  minion_gauche.style.display = "block";
   title.style.display = "none";
   minion.style.display = "none";
   starwars.style.display = "none";
@@ -415,6 +426,8 @@ function evolution() {
     else if (score < 5) {
       clearInterval(time);
       time = setInterval(function() {deplacement(snakeHead, dirX, dirY);}, 85);
+      minion_gauche.setAttribute("src", "img/minion_2.png");
+      minion_droite.setAttribute("src", "img/minion_droite2.png");
       map.style.boxShadow = "0px 0px 10px #ffc385";
       musicmn1.pause();
       musicmn2.play();
@@ -424,6 +437,8 @@ function evolution() {
     else if (score < 7) {
       clearInterval(time);
       time = setInterval(function() {deplacement(snakeHead, dirX, dirY);}, 70);
+      minion_gauche.setAttribute("src", "img/minion_3.png");
+      minion_droite.setAttribute("src", "img/minion_droite3.png");
       map.style.boxShadow = "0px 0px 20px #ff9e85";
       musicmn2.pause();
       musicmn3.play();
@@ -433,6 +448,8 @@ function evolution() {
     else if (score < 10) {
       clearInterval(time);
       time = setInterval(function() {deplacement(snakeHead, dirX, dirY);}, 55);
+      minion_gauche.setAttribute("src", "img/minion_4.png");
+      minion_droite.setAttribute("src", "img/minion_droite4.png");
       map.style.boxShadow = "0px 0px 30px #ff8585";
       musicmn3.pause();
       musicmn4.play();
@@ -442,6 +459,8 @@ function evolution() {
     else {
       clearInterval(time);
       time = setInterval(function() {deplacement(snakeHead, dirX, dirY);}, 40);
+      minion_gauche.setAttribute("src", "img/minion_5.png");
+      minion_droite.setAttribute("src", "img/minion_droite5.png");
       map.style.boxShadow = "0px 0px 40px red";
       musicmn4.pause();
       musicmn5.play();
